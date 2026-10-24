@@ -6,12 +6,12 @@ import Card from './Componets/Card'
 
 const App = () => {
   const [userData, setUserData] = useState([])
-  const [index, setIndex] = useState(0)
+  const [page, setPage] = useState(0)
 
 
   const getData = async () => {
-    const response = await axios.get(`https://dummyjson.com/products?limit=8&skip=${index}`)
-    console.log(response.data)
+    const response = await axios.get(`https://dummyjson.com/products?limit=8&skip=${page * 8}`)
+    // console.log(response.data)
     setUserData(response.data.products)
   }
 
@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect(function () {
     getData()
-  }, [index])
+  }, [page])
 
 
   return (
@@ -40,15 +40,15 @@ const App = () => {
       </div>
       <div className='flex gap-2 justify-center'>
         <button onClick={() => {
-          if (index > 1) {
-            setIndex(index - 1)
+          if (page > 1) {
+            setPage(page - 1)
           }
         }} className="border cursor-pointer border-gray-500 transition-all duration-300 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 w-30 rounded mb-10 py-2 text-xl mt-10 active:scale-90">Prev</button>
 
-        <h2 className='flex justify-center text-gray-500 font-semibold text-xl mt-11 hover:text-green-400'>Page{index + 1}</h2>
+        <h2 className='flex justify-center text-gray-500 font-semibold text-xl mt-11 hover:text-green-400'>Page{page + 1}</h2>
 
         <button onClick={() => {
-          setIndex(index + 1)
+          setPage(page + 1)
         }} className='border cursor-pointer border-gray-500 transition-all duration-300 hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 w-30 rounded mb-10 py-2 text-xl mt-10 active:scale-90'>Next</button>
       </div>
     </div>
